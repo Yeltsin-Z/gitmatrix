@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitMatrix - Decoded Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container results-page">
+        <div class="hero-section small">
+            <h1 class="animate-fade-in">Decoded Matrix</h1>
+        </div>
+        
+        <div class="results-container animate-slide-up">
+            <!-- Major Items Section -->
+            {% set feat_entries = output | selectattr('type', 'equalto', 'feat') | list %}
+            {% if feat_entries %}
+            <div class="commit-type-section major-items animate-fade-in">
+                <h3 class="type-heading major">MAJOR ITEMS</h3>
+                <ul class="commit-list">
+                    {% for entry in feat_entries %}
+                    <li class="commit-entry major animate-slide-in" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+                        <div class="commit-content">
+                            <div class="commit-description">
+                                <span class="description-text">
+                                    <span class="bullet">•</span>
+                                    {{ entry.description }}
+                                </span>
+                                {% if entry.author %}
+                                <span class="author-info">
+                                    <span class="author-separator">→</span>
+                                    <span class="commit-author">@{{ entry.author }}</span>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Regular Sections -->
+            {% set types = ['feat', 'fix', 'chore', 'hotfix'] %}
+            {% for type in types %}
+                {% set type_entries = output | selectattr('type', 'equalto', type) | list %}
+                {% if type_entries %}
+                    <div class="commit-type-section animate-fade-in" style="animation-delay: {{ loop.index0 * 0.2 }}s">
+                        <h3 class="type-heading {{ type }}">{{ type | upper }}</h3>
+                        <ul class="commit-list">
+                            {% for entry in type_entries %}
+                            <li class="commit-entry {{ entry.type }} animate-slide-in" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+                                <div class="commit-content">
+                                    <div class="commit-description">
+                                        <span class="description-text">
+                                            <span class="bullet">•</span>
+                                            {{ entry.eng_number }}: {{ entry.description }}
+                                        </span>
+                                        {% if entry.author %}
+                                        <span class="author-info">
+                                            <span class="author-separator">→</span>
+                                            <span class="commit-author">@{{ entry.author }}</span>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="navigation animate-fade-in">
+            <a href="{{ url_for('index') }}" class="back-button">
+                <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.25 6.75L4.75 12L10.25 17.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4.75 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Decode Another Log</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
