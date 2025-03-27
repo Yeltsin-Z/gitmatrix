@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import re
+import os
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Required for session
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-for-local-testing')
 
 def process_commit_log(text):
     # Regular expression to match ENG entries with their authors
