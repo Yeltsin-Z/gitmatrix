@@ -12,7 +12,6 @@
         </div>
         
         <div class="results-container animate-slide-up">
-            <!-- Major Items Section -->
             {% set feat_entries = output | selectattr('type', 'equalto', 'feat') | list %}
             {% if feat_entries %}
             <div class="commit-type-section major-items animate-fade-in">
@@ -40,7 +39,6 @@
             </div>
             {% endif %}
 
-            <!-- Regular Sections -->
             {% set types = ['feat', 'fix', 'chore', 'hotfix'] %}
             {% for type in types %}
                 {% set type_entries = output | selectattr('type', 'equalto', type) | list %}
